@@ -6,7 +6,7 @@ public class Point implements Comparable<Point> {
 
 	private final int x; // x-coordinate of this point
 	private final int y; // y-coordinate of this point
-	private final double slope;
+	private double slope;
 
 	/**
 	 * Initializes a new point.
@@ -17,7 +17,9 @@ public class Point implements Comparable<Point> {
 	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
-		slope = slopeTo(new Point(0, 0));
+		if (x != 0 && y != 0) {
+			slope = (double)y/(double)x;
+		}
 	}
 
 	/**
@@ -104,7 +106,7 @@ public class Point implements Comparable<Point> {
 			double slope2 = ref.slopeTo(p2);
 			if (slope1 == slope2)
 				return 0;
-			return (int)(slope1 - slope2);
+			return (int) (slope1 - slope2);
 		}
 	}
 
@@ -117,12 +119,5 @@ public class Point implements Comparable<Point> {
 	 */
 	public String toString() {
 		return "(" + x + ", " + y + ")";
-	}
-
-	public static void main(String[] args) {
-		Point a = new Point(5, 2);
-		Point b = new Point(1, 1);
-		Comparator<Point> c = new Point(0, 0).slopeOrder();
-		
 	}
 }

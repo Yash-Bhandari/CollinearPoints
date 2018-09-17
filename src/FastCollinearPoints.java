@@ -10,15 +10,9 @@ public class FastCollinearPoints {
     
     public FastCollinearPoints(Point[] points) {
         this.points = points;
-        originSlope = new Point(0, 0).slopeOrder();
-        Arrays.sort(points);
-        Arrays.sort(points, originSlope);
         lines = new ArrayList<>();
-        findLines();
-        lineSegments = new LineSegment[lines.size()];
-        for (int i = 0; i < lineSegments.length; i++) {
-            lineSegments[i] = lines.get(i);
-        }
+        iterate();
+        saveArray();
     }
     
     public int numberOfSegments() {
@@ -29,12 +23,31 @@ public class FastCollinearPoints {
         return lineSegments;
     }
     
-    private void findLines() {
-        Point p = new Point(0, 0);
-        for (int i = 0; i < points.length-3; i++) {
+    private void saveArray() {
+        lineSegments = new LineSegment[lines.size()];
+        for (int i = 0; i < lineSegments.length; i++) {
+            lineSegments[i] = lines.get(i);
+        }
+    }
+    
+    private void iterate() {
+    	for (int i = 0; i < points.length; i++) {
+    		Arrays.sort(points, points[i].slopeOrder());
+    		/*try {Arrays.sort(points, points[i].slopeOrder());}
+    		catch (IllegalArgumentException e) {
+    			System.out.println("Can't sort based on " + i + ", " + points[i]);
+    			break;
+    		}*/
+    		findLines(points[i]);
+    	}
+    }
+    
+    private void findLines(Point p) {
+        for (int i = 1; i < points.length-3; i++) {
             int length = 1;
-            while (i < points.length && points[i++].slopeTo(p) == points[i].slopeTo(p)) {
+            while (i < points.length-1 && points[i+1].slopeTo(p) == points[i].slopeTo(p)) {
                 length++;
+                i++;
             }
             if (length >= 4) lines.add(new LineSegment(points[i-length], points[i-1]));
         }

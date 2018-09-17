@@ -58,7 +58,8 @@ public class BruteCollinearPoints {
     }
 
     public static void main(String[] args) {
-        In in = new In(new File("test/input10.txt"));
+    	//System.out.println((int)(Double.POSITIVE_INFINITY + Double.NEGATIVE_INFINITY));
+        In in = new In(new File("test/input40.txt"));
         int length = in.readInt();
         Point[] points = new Point[length];
         for (int i = 0; i < length; i++) {
@@ -66,11 +67,13 @@ public class BruteCollinearPoints {
             int b = in.readInt();
             points[i] = new Point(a, b);
         }
+        System.out.println(points.length);
         FastCollinearPoints a = new FastCollinearPoints(points);
         System.out.println(a.numberOfSegments());
         LineSegment[] lines = a.segments();
         for(int i = 0; i < lines.length; i++) {
             System.out.println(lines[i]);
         }
+    
     }
 }
