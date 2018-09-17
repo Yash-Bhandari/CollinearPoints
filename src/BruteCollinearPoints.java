@@ -7,11 +7,9 @@ import edu.princeton.cs.algs4.In;
 public class BruteCollinearPoints {
     ArrayList<LineSegment> lines;
     private LineSegment[] lineSegments;
-    private Point[] points;
 
     public BruteCollinearPoints(Point[] points) {
 
-        this.points = points;
         if (points == null) {
             throw new IllegalArgumentException();
         }
@@ -68,7 +66,7 @@ public class BruteCollinearPoints {
             int b = in.readInt();
             points[i] = new Point(a, b);
         }
-        BruteCollinearPoints a = new BruteCollinearPoints(points);
+        FastCollinearPoints a = new FastCollinearPoints(points);
         System.out.println(a.numberOfSegments());
         LineSegment[] lines = a.segments();
         for(int i = 0; i < lines.length; i++) {
