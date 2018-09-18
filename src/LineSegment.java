@@ -1,3 +1,6 @@
+import java.io.File;
+
+import edu.princeton.cs.algs4.In;
 
 public class LineSegment {
 	private final Point p; // one endpoint of this line segment
@@ -48,5 +51,10 @@ public class LineSegment {
 	public int hashCode() {
 		throw new UnsupportedOperationException();
 	}
-
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof LineSegment) {
+			LineSegment l = (LineSegment) o;
+		}
+	}
 }

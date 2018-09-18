@@ -9,13 +9,13 @@ public class Sort {
 			subdivision = subdivision * 2;
 			for (int i = 0; i < array.length; i += subdivision) {
 				merge(array, aux, i, Math.min(i + subdivision / 2 - 1, array.length - 1),
-						Math.min(i + subdivision - 1, array.length - 1));
+						Math.min(i + subdivision - 1, array.length - 1), c);
 			}
 		}
 	}
 
 	// bottom up implementation of pure mergesort
-	public static void mergeSort(Integer[] array) {
+	/*public static void mergeSort(Integer[] array) {
 		Integer[] aux = array.clone();
 		int subdivision = 1;
 		while (subdivision < array.length) {
@@ -25,9 +25,9 @@ public class Sort {
 						Math.min(i + subdivision - 1, array.length - 1));
 			}
 		}
-	}
+	}*/
 	
-	private static void merge(Object[] array, Object[] aux, int low, int med, int high) {
+	private static void merge(Object[] array, Object[] aux, int low, int med, int high, Comparator c) {
 		int left = low;
 		int right = med + 1;
 		int i = low;
@@ -36,12 +36,12 @@ public class Sort {
 				array[i++] = aux[right++];
 			else if (right > high)
 				array[i++] = aux[left++];
-			else if (aux[left] <= aux[right])
+			else if (less(aux[left], aux[right], c))
 				array[i++] = aux[left++];
 			else
 				array[i++] = aux[right++];
 		}
-		copy(aux, array, low, high);
+		//copy(aux, array, low, high);
 	}
 
 	private static void copy(Integer[] array, Integer[] aux, int low, int high) {
@@ -75,19 +75,24 @@ public class Sort {
 	}
 
 	public static void main(String[] args) {
-		Integer[] yeet = { 7, 1, 8, 9, 2, 3, 6, 47, 2, 35 };
+		Comparator c = new Point(0, 2).slopeOrder();
+		Point[] yeet = { new Point(0, 2), new Point(1, 5), new Point(3, 4), new Point(0, 5) };
 		print(yeet);
-		mergeSort(yeet);
+		mergeSort(yeet, c);
 		print(yeet);
 	}
 
-	private static void print(Integer[] array) {
+	private static void print(Object[] array) {
 		System.out.println();
 		for (int i = 0; i < array.length; i++) {
 			System.out.print(array[i]);
 			if (i < array.length - 1)
 				System.out.print(", ");
 		}
+	}
+	
+	private static boolean less(Object v, Object w, Comparator c) {
+		return c.compare(v, w) < 0;
 	}
 
 	// swaps indexes a and b in given array
