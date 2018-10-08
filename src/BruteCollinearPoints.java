@@ -1,20 +1,24 @@
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.In;
 
+//import edu.princeton.cs.algs4.In;
+
 public class BruteCollinearPoints {
-    Point[] points;
-    ArrayList<LineSegment> lines;
-    LineSegment[] lineSegments;
+    private Point[] points;
+    private ArrayList<LineSegment> lines;
+    private LineSegment[] lineSegments;
 
     public BruteCollinearPoints(Point[] input) {
-        if (input == null) throw new IllegalArgumentException();
+        if (input == null)
+            throw new IllegalArgumentException();
         for (int i = 0; i < input.length; i++) {
-            if (input[i] == null) throw new IllegalArgumentException();
+            if (input[i] == null)
+                throw new IllegalArgumentException();
             for (int j = 0; j < i; j++) {
-                if (input[j] == input[i] && i != j) throw new IllegalArgumentException();
+                if (input[j].slopeTo(input[i]) == Double.NEGATIVE_INFINITY && i != j)
+                    throw new IllegalArgumentException();
             }
         }
         points = input;
@@ -25,7 +29,7 @@ public class BruteCollinearPoints {
     }
 
     public LineSegment[] segments() {
-        return lineSegments;
+        return lineSegments.clone();
     }
 
     public int numberOfSegments() {
@@ -59,23 +63,23 @@ public class BruteCollinearPoints {
         }
     }
 
-    private static Point[] read(String file) {
+    /*private static Point[] read(String file) {
         In in = new In(file);
         Point[] input = new Point[in.readInt()];
         for (int i = 0; i < input.length; i++) {
             input[i] = new Point(in.readInt(), in.readInt());
         }
-        return input;
+        return input;O
     }
-    
+
     private static void printLines(LineSegment[] lines) {
         for (int i = 0; i < lines.length; i++) {
             System.out.println(lines[i]);
         }
     }
 
-    /*public static void main(String[] args) {
-        BruteCollinearPoints a = new BruteCollinearPoints(read("test/myinput.txt"));
+    public static void main(String[] args) {
+        BruteCollinearPoints a = new BruteCollinearPoints(read("test/input400.txt"));
         System.out.println(a.numberOfSegments());
         printLines(a.segments());
     }*/

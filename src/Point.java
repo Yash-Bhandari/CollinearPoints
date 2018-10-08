@@ -6,7 +6,6 @@ public class Point implements Comparable<Point> {
 
 	private final int x; // x-coordinate of this point
 	private final int y; // y-coordinate of this point
-	private double slope;
 
 	/**
 	 * Initializes a new point.
@@ -17,9 +16,6 @@ public class Point implements Comparable<Point> {
 	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
-		if (x != 0 && y != 0) {
-			slope = (double) y / (double) x;
-		}
 	}
 
 	/**
@@ -59,6 +55,7 @@ public class Point implements Comparable<Point> {
 			else
 				return Double.POSITIVE_INFINITY;
 		}
+		if (rise == 0) return 0;
 		return rise / run;
 	}
 

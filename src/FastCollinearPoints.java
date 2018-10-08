@@ -1,9 +1,10 @@
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
 import edu.princeton.cs.algs4.In;
+
+//import edu.princeton.cs.algs4.In;
 
 public class FastCollinearPoints {
     private Point[] points;
@@ -11,11 +12,14 @@ public class FastCollinearPoints {
     private LineSegment[] segments;
 
     public FastCollinearPoints(Point[] input) {
-        if (input == null) throw new IllegalArgumentException();
+        if (input == null)
+            throw new IllegalArgumentException();
         for (int i = 0; i < input.length; i++) {
-            if (input[i] == null) throw new IllegalArgumentException();
+            if (input[i] == null)
+                throw new IllegalArgumentException();
             for (int j = 0; j < i; j++) {
-                if (input[j] == input[i] && i != j) throw new IllegalArgumentException();
+                if (input[j].slopeTo(input[i]) == Double.NEGATIVE_INFINITY && i != j)
+                    throw new IllegalArgumentException();
             }
         }
         lines = new ArrayList<LineSegment>();
@@ -30,9 +34,21 @@ public class FastCollinearPoints {
             int start = 1;
             int end = 2;
             while (end < points.length) {
-                if (points[0].slopeTo(points[start]) == points[0].slopeTo(points[end]) && points[0].compareTo(points[start]) < 0) {
-                    length++;
-                    end++;
+                if (points[0].slopeTo(points[start]) == points[0].slopeTo(points[end])
+                        && points[0].compareTo(points[start]) < 0) {
+                    if (start > 1) {
+                        if (points[0].slopeTo(points[start - 1]) != points[0].slopeTo(points[start])) {
+                            length++;
+                            end++;
+                        } else {
+                            length = 2;
+                            start = end;
+                            end++;
+                        }
+                    } else {
+                        length++;
+                        end++;
+                    }
                 } else {
                     if (length >= 4) {
                         addLine(points[0], points[start], points[end - 1]);
@@ -50,9 +66,9 @@ public class FastCollinearPoints {
     }
 
     public LineSegment[] segments() {
-        return segments;
+        return segments.clone();
     }
-    
+
     public int numberOfSegments() {
         return segments.length;
     }
@@ -78,7 +94,7 @@ public class FastCollinearPoints {
         lines.add(new LineSegment(start, end));
     }
 
-    private static Point[] read(String file) {
+   /* private static Point[] read(String file) {
         In in = new In(file);
         Point[] input = new Point[in.readInt()];
         for (int i = 0; i < input.length; i++) {
@@ -93,9 +109,10 @@ public class FastCollinearPoints {
         }
     }
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         FastCollinearPoints a = new FastCollinearPoints(read("test/input400.txt"));
         System.out.println(a.numberOfSegments());
         printLines(a.segments);
     }*/
+
 }
