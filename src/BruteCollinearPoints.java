@@ -53,7 +53,7 @@ public class BruteCollinearPoints {
     }
 
     private static Point[] read(String file) {
-        In in = new In("test/" + file);
+        In in = new In(file);
         Point[] input = new Point[in.readInt()];
         for (int i = 0; i < input.length; i++) {
             input[i] = new Point(in.readInt(), in.readInt());
@@ -68,7 +68,7 @@ public class BruteCollinearPoints {
     }
 
     public static void main(String[] args) {
-        BruteCollinearPoints a = new BruteCollinearPoints(read("myinput.txt"));
+        BruteCollinearPoints a = new BruteCollinearPoints(read("test/myinput.txt"));
         System.out.println(a.numberOfSegments());
         printLines(a.segments());
     }
