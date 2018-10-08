@@ -51,10 +51,4 @@ public class LineSegment {
 	public int hashCode() {
 		throw new UnsupportedOperationException();
 	}
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof LineSegment) {
-			LineSegment l = (LineSegment) o;
-		}
-	}
 }

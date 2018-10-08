@@ -41,7 +41,6 @@ public class Sort {
 			else
 				array[i++] = aux[right++];
 		}
-		//copy(aux, array, low, high);
 	}
 
 	private static void copy(Integer[] array, Integer[] aux, int low, int high) {
