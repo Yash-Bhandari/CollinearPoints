@@ -11,6 +11,13 @@ public class FastCollinearPoints {
     private LineSegment[] segments;
 
     public FastCollinearPoints(Point[] input) {
+        if (input == null) throw new IllegalArgumentException();
+        for (int i = 0; i < input.length; i++) {
+            if (input[i] == null) throw new IllegalArgumentException();
+            for (int j = 0; j < i; j++) {
+                if (input[j] == input[i] && i != j) throw new IllegalArgumentException();
+            }
+        }
         lines = new ArrayList<LineSegment>();
         Arrays.sort(input);
         points = input.clone();
@@ -86,9 +93,9 @@ public class FastCollinearPoints {
         }
     }
 
-    public static void main(String[] args) {
-        FastCollinearPoints a = new FastCollinearPoints(read("test/myinput.txt"));
+    /*public static void main(String[] args) {
+        FastCollinearPoints a = new FastCollinearPoints(read("test/input400.txt"));
         System.out.println(a.numberOfSegments());
         printLines(a.segments);
-    }
+    }*/
 }

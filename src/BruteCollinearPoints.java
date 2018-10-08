@@ -10,6 +10,13 @@ public class BruteCollinearPoints {
     LineSegment[] lineSegments;
 
     public BruteCollinearPoints(Point[] input) {
+        if (input == null) throw new IllegalArgumentException();
+        for (int i = 0; i < input.length; i++) {
+            if (input[i] == null) throw new IllegalArgumentException();
+            for (int j = 0; j < i; j++) {
+                if (input[j] == input[i] && i != j) throw new IllegalArgumentException();
+            }
+        }
         points = input;
         Arrays.sort(points);
         lines = new ArrayList<LineSegment>();
@@ -67,9 +74,9 @@ public class BruteCollinearPoints {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         BruteCollinearPoints a = new BruteCollinearPoints(read("test/myinput.txt"));
         System.out.println(a.numberOfSegments());
         printLines(a.segments());
-    }
+    }*/
 }
